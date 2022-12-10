@@ -1,0 +1,12 @@
+{
+    "email": "打卡失败通知邮箱",
+    "userId": "学号",
+    "address": "XX大学XX校区",
+    "province": "XX省",
+    "city": "XX市",
+    "county": "XX区",
+    "longitude": 经度浮点数,
+    "latitude": 纬度浮点数,
+    "billingContactName": "紧急联系人",
+    "billingContactNameTel": "紧急联系人电话"
+}
