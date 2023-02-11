@@ -91,31 +91,6 @@ def daka():
         print("已打卡")
         return
 
-    # 获取打卡截图
-    r = requests.post("/daka/getHesuan")
-    jpg_base64 = r.text
-    r.close()
-
-    # 上传打卡截图
-    headers = {
-        'Connection': 'keep-alive',
-        'Accept': 'application/json, text/plain, */*',
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 12; 22011211C Build/SP1A.210812.016; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/89.0.4389.72 MQQBrowser/6.2 TBS/046125 Mobile Safari/537.36 wxwork/4.0.16 ColorScheme/Light MicroMessenger/7.0.1 NetType/4G Language/zh Lang/zh',
-        'Content-Type': 'application/json;charset=UTF-8',
-        'Origin': school_home_url,
-        'X-Requested-With': 'com.tencent.wework',
-        'Referer': school_home_url+'/front/',
-        'Accept-Language': 'zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7',
-    }
-    json_data = {
-        'file': 'data:image/jpeg;base64,'+jpg_base64,
-        'filename': 'ScreenShot.jpg',
-    }
-    response = session.post(school_home_url+'/microapp/health_daily/uploadFile', headers=headers, json=json_data, verify=False)
-    response = json.loads(response.text)
-    jpg_url = response["domain"] + response["fileUrl"]
-    print(jpg_url)
-
     headers = {
         'Connection': 'keep-alive',
         'Pragma': 'no-cache',
@@ -130,52 +105,50 @@ def daka():
     }
 
     json_data = {
-    'stuImgUrl': jpg_url,
-    'isInThreeDay': '是',
-    'teacherImgUrl': None,
-    'isInTwoDay': None,
-    'noTwoDayRmk': None,
-    'noThreeDayRmk': None,
-    'healthCodeState': '绿',
-    'teacherOrStu': '学生',
-    'geliState': None,
-    'resideArea': None,
-    'checkState': '是',
-    'checkStateRmk': None,
-    'isHasDangerous': None,
-    'isHasDangerousRmk': None,
-    'address': user_data["address"],
-    'locationErrorExplain': None,
-    'province': user_data["province"],
-    'city': user_data["city"],
-    'county': user_data["county"],
-    'distance': 2,
-    'longitude': user_data["longitude"],
-    'latitude': user_data["latitude"],
-    'temperature': '37.2',
-    'healthCondition': '正常',
-    'healthConditionExplain': None,
-    'familyCondition': None,
-    'familyConditionExplain': None,
-    'recentlyGoArea': None,
-    'recentlyGoAreaExplain': None,
-    'ifContactCase': '无',
-    'ifContactCaseExplain': None,
-    'ifContactAreaBackPerson': None,
-    'ifContactAreaBackPersonExplain': None,
-    'ifContactRjry': '无',
-    'ifContactRjryExplain': None,
-    'ifReturnToSchool': '已在校',
-    'ifReturnToSchoolExplain': None,
-    'billingContactName': user_data["billingContactName"],
-    'billingContactNameTel': user_data["billingContactNameTel"],
-    'specialSituation': None,
-    'ifFromToFocusArea': None,
-    'ifFromToFocusAreaExplain': '',
-    'fileUrl': '',
-    'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-    'plusinfo': 'Mozilla/5.0 (Linux; Android 12; 22011211C Build/SP1A.210812.016; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/89.0.4389.72 MQQBrowser/6.2 TBS/046125 Mobile Safari/537.36 wxwork/4.0.16 ColorScheme/Light MicroMessenger/7.0.1 NetType/WIFI Language/zh Lang/zh'}
-
+        "stuImgUrl": "",
+        "isInThreeDay": "",
+        "teacherImgUrl": "",
+        "isInTwoDay": "",
+        "noTwoDayRmk": "",
+        "noThreeDayRmk": "",
+        "healthCodeState": "",
+        "ownerHasSicks": "已康复",
+        "sevenDayGoDangours": "",
+        "teacherOrStu": "学生",
+        "geliState": "",
+        "resideArea": "",
+        "checkState": "",
+        "checkStateRmk": "",
+        "isHasDangerous": "",
+        "isHasDangerousRmk": "",
+        "address": user_data["address"],
+        "locationErrorExplain": null,
+        "province": user_data["province"],
+        "city": user_data["city"],
+        "county": user_data["county"],
+        "distance": 1,
+        "longitude": user_data["longitude"],
+        "latitude": user_data["latitude"],
+        "temperature": "37.2",
+        "healthCondition": "正常",
+        "healthConditionExplain": null,
+        "familyCondition": null,
+        "familyConditionExplain": null,
+        "recentlyGoArea": null,
+        "recentlyGoAreaExplain": null,
+        "ifContactAreaBackPerson": null,
+        "ifContactAreaBackPersonExplain": null,
+        "ifReturnToSchool": "未返校",
+        "ifReturnToSchoolExplain": null,
+        "billingContactName": user_data["billingContactName"],
+        "billingContactNameTel": user_data["billingContactNameTel"],
+        "specialSituation": null,
+        "ifFromToFocusArea": null,
+        "ifFromToFocusAreaExplain": "",
+        "fileUrl": ",,,,,,",
+        "time": "2023-02-11 19:15:00",
+        "plusinfo": "Mozilla/5.0 (Linux; Android 13; 22011211C Build/TP1A.220624.014; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/89.0.4389.72 MQQBrowser/6.2 TBS/046237 Mobile Safari/537.36 wxwork/4.1.0 MicroMessenger/7.0.1 NetType/WIFI Language/zh Lang/zh ColorScheme/Light"
+    }
     r = session.post(school_home_url+'/microapp/health_daily/report', headers=headers, json=json_data, verify=False)
     result = json.loads(r.text)
     session.close()
